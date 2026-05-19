@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:postalhub_tracker/pages/home/home_widgets/services.dart';
 import 'package:postalhub_tracker/pages/search_inventory/search_inventory.dart';
-import 'package:postalhub_tracker/pages/services/locations/locations_main.dart';
-import 'package:postalhub_tracker/pages/services/printing/printing.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class QuickactionWidget extends StatefulWidget {
   const QuickactionWidget({super.key});
@@ -12,6 +10,60 @@ class QuickactionWidget extends StatefulWidget {
 }
 
 class _QuickactionWidgetState extends State<QuickactionWidget> {
+  void _showNotAvailableDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          icon: const Icon(Icons.info),
+          title: const Text('Information'),
+          content: const Text(
+            'To access the latest features, please download our mobile app from the Play Store. The web version will continue to receive critical updates and fixes only.',
+          ),
+          actions: <Widget>[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                FilledButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    _launchURL();
+                  },
+                  child: const Text('Download for Android'),
+                ),
+                const SizedBox(height: 10),
+                FilledButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    _launchURL();
+                  },
+                  child: const Text('Download for iOS'),
+                ),
+                const SizedBox(height: 10),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Dismiss'),
+                ),
+              ],
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _launchURL() async {
+    const url =
+        'https://play.google.com/store/apps/details?id=com.postalhub.tracker';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -77,14 +129,7 @@ class _QuickactionWidgetState extends State<QuickactionWidget> {
                   borderRadius: BorderRadius.circular(25),
                   child: Material(
                     child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LocationsMain(),
-                          ),
-                        );
-                      },
+                      onTap: () => _showNotAvailableDialog(context),
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                         child: Column(
@@ -128,14 +173,7 @@ class _QuickactionWidgetState extends State<QuickactionWidget> {
                   borderRadius: BorderRadius.circular(25),
                   child: Material(
                     child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const PrintingService(),
-                          ),
-                        );
-                      },
+                      onTap: () => _showNotAvailableDialog(context),
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                         child: Column(
@@ -179,62 +217,7 @@ class _QuickactionWidgetState extends State<QuickactionWidget> {
                   borderRadius: BorderRadius.circular(25),
                   child: Material(
                     child: InkWell(
-                      onTap: () {
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.vertical(top: Radius.circular(25)),
-                          ),
-                          builder: (BuildContext context) {
-                            return SizedBox(
-                              height: MediaQuery.of(context).size.height *
-                                  0.85, // Up to appbar area
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(0, 13, 0, 5),
-                                    child: Text(
-                                      "All Services",
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
-                                      ),
-                                    ),
-                                  ),
-                                  Divider(),
-                                  Expanded(
-                                    child: DraggableScrollableSheet(
-                                      expand: true,
-                                      initialChildSize:
-                                          1.0, // Uses all available space from parent
-                                      minChildSize: 0.5,
-                                      maxChildSize: 1.0,
-                                      builder: (context, scrollController) {
-                                        return SingleChildScrollView(
-                                          controller: scrollController,
-                                          padding: const EdgeInsets.all(12),
-                                          child: Column(
-                                            children: const [
-                                              ServicesSheet(),
-                                              SizedBox(height: 30),
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        );
-                      },
+                      onTap: () => _showNotAvailableDialog(context),
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                         child: Column(

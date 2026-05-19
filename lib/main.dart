@@ -1,4 +1,5 @@
 //INTERNAL PACKAGE
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,6 @@ import 'package:postalhub_tracker/src/postalhub_ui.dart';
 
 //EXTERNAL PACKAGE
 import 'package:google_fonts/google_fonts.dart';
-//import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 
@@ -23,12 +23,10 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // await FirebaseAppCheck.instance.activate(
-  //  webProvider:
-  //       ReCaptchaV3Provider('6LdVFMsrAAAAAEgO_ua32jn2E2qSjQta1En3Ar6c'),
-  //   androidProvider: AndroidProvider.playIntegrity,
-  // appleProvider: AppleProvider.deviceCheck,
-  //);
+  await FirebaseAppCheck.instance.activate(
+    webProvider:
+        ReCaptchaV3Provider('6Lf7J_IsAAAAAD7ZVJ9Bi2gTU7JlHPS_zTI_8NeP'),
+  );
 
   FlutterError.onError = (errorDetails) {
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);

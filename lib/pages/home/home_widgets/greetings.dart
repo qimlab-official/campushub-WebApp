@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:awesome_ripple_animation/awesome_ripple_animation.dart';
 
 class Greetings extends StatefulWidget {
@@ -9,7 +9,7 @@ class Greetings extends StatefulWidget {
 }
 
 class _GreetingsState extends State<Greetings> {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseRemoteConfig _remoteConfig = FirebaseRemoteConfig.instance;
   String _greeting = "Oh, Hi!";
 
   @override
@@ -20,18 +20,11 @@ class _GreetingsState extends State<Greetings> {
 
   Future<void> _fetchGreeting() async {
     try {
-      QuerySnapshot snapshot =
-          await _firestore.collection('user_experience').get();
-      if (snapshot.docs.isNotEmpty) {
-        var data = snapshot.docs.first.data() as Map<String, dynamic>;
-        setState(() {
-          _greeting = data['greeting'] ?? 'Oh, Hi!';
-        });
-      } else {
-        setState(() {
-          _greeting = 'Oh, Hi!';
-        });
-      }
+      await _remoteConfig.fetchAndActivate();
+      String remoteGreeting = _remoteConfig.getString('greetings');
+      setState(() {
+        _greeting = remoteGreeting.isNotEmpty ? remoteGreeting : 'Oh, Hi!';
+      });
     } catch (e) {
       setState(() {
         _greeting = 'Oh, Hi!';

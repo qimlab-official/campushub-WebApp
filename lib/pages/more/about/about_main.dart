@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
-import 'package:postalhub_tracker/pages/more/about/about_postalhub.dart';
 
 class AboutMain extends StatefulWidget {
   const AboutMain({super.key});
@@ -13,7 +12,33 @@ Future<void> _privacypolicy(BuildContext context) async {
   final theme = Theme.of(context);
   try {
     await launchUrl(
-      Uri.parse('https://policies.postalhub.my'),
+      Uri.parse('https://policies.campushub.my'),
+      customTabsOptions: CustomTabsOptions(
+        colorSchemes: CustomTabsColorSchemes.defaults(
+          toolbarColor: theme.colorScheme.surface,
+          navigationBarColor: theme.colorScheme.surface,
+        ),
+        shareState: CustomTabsShareState.off,
+        urlBarHidingEnabled: true,
+        showTitle: true,
+      ),
+      safariVCOptions: SafariViewControllerOptions(
+        preferredBarTintColor: theme.colorScheme.surface,
+        preferredControlTintColor: theme.colorScheme.onSurface,
+        barCollapsingEnabled: true,
+        entersReaderIfAvailable: false,
+      ),
+    );
+  } catch (e) {
+    debugPrint(e.toString());
+  }
+}
+
+Future<void> _aboutCampusHub(BuildContext context) async {
+  final theme = Theme.of(context);
+  try {
+    await launchUrl(
+      Uri.parse('https://campushub.my'),
       customTabsOptions: CustomTabsOptions(
         colorSchemes: CustomTabsColorSchemes.defaults(
           toolbarColor: theme.colorScheme.surface,
@@ -67,18 +92,13 @@ class _AboutMainState extends State<AboutMain> {
                       child: Material(
                         color: Theme.of(context).colorScheme.surfaceVariant,
                         child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const About()));
-                            },
+                            onTap: () => _aboutCampusHub(context),
                             child: Padding(
                               padding: const EdgeInsets.all(6),
                               child: ListTile(
                                 title: const Text('About'),
                                 subtitle:
-                                    const Text('Learn more about Postal Hub'),
+                                    const Text('Learn more about Campus Hub'),
                                 trailing:
                                     const Icon(Icons.chevron_right_rounded),
                               ),
@@ -129,7 +149,7 @@ class _AboutMainState extends State<AboutMain> {
                               child: ListTile(
                                 title: const Text('Licences'),
                                 subtitle:
-                                    const Text('Licenses used in Postal Hub'),
+                                    const Text('Licenses used in Campus Hub'),
                                 trailing:
                                     const Icon(Icons.chevron_right_rounded),
                               ),

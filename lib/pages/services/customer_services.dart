@@ -1,9 +1,76 @@
 import 'package:flutter/material.dart';
-import 'package:postalhub_tracker/pages/services/customer_services/faqs/main_faqs_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class CustomerServices extends StatelessWidget {
+class CustomerServices extends StatefulWidget {
   const CustomerServices({super.key});
+
+  @override
+  State<CustomerServices> createState() => _CustomerServicesState();
+}
+
+class _CustomerServicesState extends State<CustomerServices> {
+  void _showNotAvailableDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          icon: const Icon(Icons.info),
+          title: const Text('Information'),
+          content: const Text(
+            'To access the latest features, please download our mobile app from the Play Store. The web version will continue to receive critical updates and fixes only.',
+          ),
+          actions: <Widget>[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                FilledButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    _launchURL();
+                  },
+                  child: const Text('Download for Android'),
+                ),
+                const SizedBox(height: 10),
+                FilledButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    _launchURL();
+                  },
+                  child: const Text('Download for iOS'),
+                ),
+                const SizedBox(height: 10),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Dismiss'),
+                ),
+              ],
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _launchURL() async {
+    const url =
+        'https://play.google.com/store/apps/details?id=com.postalhub.tracker';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  Future<void> _launchURLHelpdesk() async {
+    const url = 'https://helpdesk.campushub.my';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +102,7 @@ class CustomerServices extends StatelessWidget {
                         child: Material(
                           color: Theme.of(context).colorScheme.surfaceVariant,
                           child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const MainFaqsPage()));
-                            },
+                            onTap: () => _launchURLHelpdesk(),
                             child: Padding(
                               padding: const EdgeInsets.all(0),
                               child: ListTile(
@@ -87,32 +148,14 @@ class CustomerServices extends StatelessWidget {
                         child: Material(
                           color: Theme.of(context).colorScheme.surfaceVariant,
                           child: InkWell(
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Text('Coming Soon'),
-                                    content: Text(
-                                        'This feature is not available yet.'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.of(context).pop(),
-                                        child: Text('OK'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            },
+                            onTap: () => _showNotAvailableDialog(context),
                             child: Padding(
                               padding: const EdgeInsets.all(0),
                               child: ListTile(
                                 title: Padding(
                                   padding:
                                       const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                  child: const Text('Ticket Support [PLANNED]'),
+                                  child: const Text('Ticket Support'),
                                 ),
                                 subtitle: Padding(
                                     padding:
@@ -154,32 +197,14 @@ class CustomerServices extends StatelessWidget {
                         child: Material(
                           color: Theme.of(context).colorScheme.surfaceVariant,
                           child: InkWell(
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Text('Coming Soon'),
-                                    content: Text(
-                                        'This feature is not available yet.'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.of(context).pop(),
-                                        child: Text('OK'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            },
+                            onTap: () => _showNotAvailableDialog(context),
                             child: Padding(
                               padding: const EdgeInsets.all(0),
                               child: ListTile(
                                 title: Padding(
                                   padding:
                                       const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                  child: const Text('Parcel Mate [PLANNED]'),
+                                  child: const Text('Parcel Mate'),
                                 ),
                                 subtitle: Padding(
                                     padding:

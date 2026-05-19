@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:postalhub_tracker/pages/more/about/about_main.dart';
 import 'package:postalhub_tracker/pages/more/settings/appearance/appearance_main.dart';
 import 'package:postalhub_tracker/pages/more/settings/language/language_main.dart';
-import 'package:postalhub_tracker/pages/services/customer_services/customer_services.dart';
+import 'package:postalhub_tracker/pages/services/customer_services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MorePage extends StatefulWidget {
@@ -16,6 +16,50 @@ class MorePage extends StatefulWidget {
 bool switchValue = false;
 
 class _MorePageState extends State<MorePage> {
+  void _showNotAvailableDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          icon: const Icon(Icons.info),
+          title: const Text('Information'),
+          content: const Text(
+            'To access the latest features, please download our mobile app from the Play Store. The web version will continue to receive critical updates and fixes only.',
+          ),
+          actions: <Widget>[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                FilledButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    _launchURL();
+                  },
+                  child: const Text('Download for Android'),
+                ),
+                const SizedBox(height: 10),
+                FilledButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    _launchURL();
+                  },
+                  child: const Text('Download for iOS'),
+                ),
+                const SizedBox(height: 10),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Dismiss'),
+                ),
+              ],
+            )
+          ],
+        );
+      },
+    );
+  }
+
   Future<void> _launchURL() async {
     const url =
         'https://play.google.com/store/apps/details?id=com.postalhub.tracker';
@@ -196,25 +240,8 @@ class _MorePageState extends State<MorePage> {
                                       .colorScheme
                                       .surfaceVariant,
                                   child: InkWell(
-                                    onTap: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            title: Text('Opps! Not available'),
-                                            content: Text(
-                                                'This feature only available in mobile version (Account registration required).'),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () =>
-                                                    Navigator.of(context).pop(),
-                                                child: Text('OK'),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    },
+                                    onTap: () =>
+                                        _showNotAvailableDialog(context),
                                     child: Padding(
                                       padding: const EdgeInsets.all(6),
                                       child: ListTile(
@@ -252,25 +279,8 @@ class _MorePageState extends State<MorePage> {
                                     .colorScheme
                                     .surfaceVariant,
                                 child: InkWell(
-                                    onTap: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            title: Text('Opps! Not available'),
-                                            content: Text(
-                                                'This feature only available in mobile version (Account registration required).'),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () =>
-                                                    Navigator.of(context).pop(),
-                                                child: Text('OK'),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    },
+                                    onTap: () =>
+                                        _showNotAvailableDialog(context),
                                     child: Padding(
                                       padding: const EdgeInsets.all(6),
                                       child: ListTile(
@@ -426,7 +436,7 @@ class _MorePageState extends State<MorePage> {
                                 child: ListTile(
                                   title: const Text('About'),
                                   subtitle:
-                                      const Text('Learn more about Postal Hub'),
+                                      const Text('Learn more about Campus Hub'),
                                   leading: const Icon(
                                     Icons.info_rounded,
                                     size: 25,

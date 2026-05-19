@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
 import 'package:postalhub_tracker/pages/home/home.dart';
-import 'package:postalhub_tracker/pages/inbox/inbox.dart';
 import 'package:postalhub_tracker/pages/more/more_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -20,7 +19,6 @@ class _NavigatorServicesState extends State<NavigatorServices>
   var _selectedIndex = 0;
   final List<Widget> _windgetOption = <Widget>[
     const HomePage(),
-    const Inbox(),
     const MorePage(),
   ];
   @override
@@ -109,11 +107,6 @@ class _NavigatorServicesState extends State<NavigatorServices>
                     label: 'Home',
                   ),
                   NavigationDestination(
-                    icon: Icon(Icons.inbox_outlined),
-                    selectedIcon: Icon(Icons.inbox_rounded),
-                    label: 'Inbox',
-                  ),
-                  NavigationDestination(
                     icon: Icon(Icons.more_horiz_outlined),
                     selectedIcon: Icon(Icons.more_horiz_rounded),
                     label: 'More',
@@ -144,11 +137,6 @@ class _NavigatorServicesState extends State<NavigatorServices>
                         label: Text('Home'),
                       ),
                       NavigationRailDestination(
-                        icon: Icon(Icons.inbox_outlined),
-                        selectedIcon: Icon(Icons.inbox_rounded),
-                        label: Text('Inbox'),
-                      ),
-                      NavigationRailDestination(
                         icon: Icon(Icons.more_horiz_outlined),
                         selectedIcon: Icon(Icons.more_horiz_outlined),
                         label: Text('More'),
@@ -176,11 +164,6 @@ class _NavigatorServicesState extends State<NavigatorServices>
                         label: Text('Home'),
                         icon: Icon(Icons.home_outlined),
                         selectedIcon: Icon(Icons.home_rounded),
-                      ),
-                      NavigationDrawerDestination(
-                        label: Text('Inbox'),
-                        icon: Icon(Icons.inbox_outlined),
-                        selectedIcon: Icon(Icons.inbox_rounded),
                       ),
                       NavigationDrawerDestination(
                         icon: Icon(Icons.more_horiz_outlined),

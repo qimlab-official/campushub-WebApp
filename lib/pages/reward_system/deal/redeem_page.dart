@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:postalhub_tracker/src/ui_components/gradient_background.dart';
 import 'package:action_slider/action_slider.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RedeemPage extends StatefulWidget {
   final String imgurl;
@@ -23,6 +23,60 @@ class RedeemPage extends StatefulWidget {
 }
 
 class _RedeemPageState extends State<RedeemPage> {
+  void _showNotAvailableDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          icon: const Icon(Icons.info),
+          title: const Text('Information'),
+          content: const Text(
+            'To access the latest features, please download our mobile app from the Play Store. The web version will continue to receive critical updates and fixes only.',
+          ),
+          actions: <Widget>[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                FilledButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    _launchURL();
+                  },
+                  child: const Text('Download for Android'),
+                ),
+                const SizedBox(height: 10),
+                FilledButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    _launchURL();
+                  },
+                  child: const Text('Download for iOS'),
+                ),
+                const SizedBox(height: 10),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Dismiss'),
+                ),
+              ],
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _launchURL() async {
+    const url =
+        'https://play.google.com/store/apps/details?id=com.postalhub.tracker';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,24 +160,18 @@ class _RedeemPageState extends State<RedeemPage> {
                       toggleColor: Theme.of(context).colorScheme.primary,
                       startAction: (controller) async {
                         controller.failure();
-                        Fluttertoast.showToast(
-                          msg: "Cancelled",
-                        );
                         await Future.delayed(const Duration(seconds: 1));
                         controller.reset();
                         Navigator.pop(context);
+                        _showNotAvailableDialog(context);
                       },
                       endAction: (controller) async {
                         controller.loading();
-                        await Future.delayed(const Duration(seconds: 2));
-                        controller.failure();
                         await Future.delayed(const Duration(seconds: 1));
+                        controller.failure();
                         controller.reset();
-                        Fluttertoast.showToast(
-                          msg:
-                              "Reward redemption not available. Please download mobile version from PLay Store/App Store",
-                        );
                         Navigator.pop(context);
+                        _showNotAvailableDialog(context);
                       },
                       startChild: const Text(
                         'CANCEL',

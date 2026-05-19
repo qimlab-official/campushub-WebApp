@@ -1,9 +1,9 @@
 name: postalhub_tracker
-description: "Parcel tracking app/system for Postal Hub"
+description: "Campus Hub | Parcel Tracker Mini App"
 
 publish_to: 'none' 
 
-version: 26.5.1710+20
+version: 26.5.1908+23
 
 environment:
   sdk: '>=3.4.0 <4.0.0'
@@ -45,6 +45,7 @@ dependencies:
   firebase_crashlytics: ^5.0.0
   fluttertoast: ^9.0.0
   action_slider: ^0.7.0
+  firebase_remote_config: ^6.5.1
 
 
 
@@ -59,22 +60,8 @@ flutter:
   assets:
   - assets/images/postalhub_logo.jpg
   - assets/images/postalhub_logo_outlined.png
-  - assets/images/dev_pic1.png
-  - assets/images/dev_pic.png
-  - assets/images/How_to_use_1.png
-  - assets/images/How_to_use_2.png
-  - assets/images/favicon.png
   - assets/images/megaphones_purple.png
-  - assets/images/carousel/1.png
-  - assets/images/carousel/2.png
-  - assets/images/carousel/3.png
-  - assets/images/carousel/4.png
-  - assets/images/carousel/5.png
-  - assets/images/carousel/6.png
   - assets/images/profile_image_icon.jpg
-  - assets/images/login/login.png
-  - assets/images/login/register.png
-  - assets/images/login/vector-3.png
   - assets/images/profile_card.jpg
   - assets/images/components/not_available.png
   - assets/images/components/parcel_mate.png

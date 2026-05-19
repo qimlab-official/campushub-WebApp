@@ -62,18 +62,6 @@ class _AnnouncementWidgetState extends State<AnnouncementWidget> {
                 color: Theme.of(context).colorScheme.primary,
               ),
               const Spacer(),
-              Padding(
-                padding: const EdgeInsets.only(right: 16),
-                child: TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'VIEW MORE',
-                    style: TextStyle(
-                      fontSize: 11,
-                    ),
-                  ),
-                ),
-              ),
             ],
           ),
         ),

@@ -1,11 +1,11 @@
 {
-    "name": "Campus Hub | Parcel Tracker Mini App",
-    "short_name": "Campus Hub | Mini App",
+    "name": "Campus Hub | Parcel Tracker",
+    "short_name": "Campus Hub | Tracker",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Campus Hub | Parcel Tracker Mini App system",
+    "description": "Campus Hub | Parcel Tracker Mini App",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
